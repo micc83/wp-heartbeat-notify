@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Wp Hearbeat Notify (beta)
+Plugin Name: Wp Heartbeat Notify (beta)
 Plugin URI: https://github.com/micc83/WpDevTool
-Description: Based on <strong>WordPress 3.6 heartbeat API</strong>, Wp Hearbeat Notify, display a realtime custom message to your visitor each time a new post is published with a link redirecting to it. Still in beta version, this plugin has been <strong>full tested only on WordPress 3.6-beta3</strong>.
+Description: Based on <strong>WordPress 3.6 heartbeat API</strong>, Wp Heartbeat Notify, display a realtime custom message to your visitor each time a new post is published with a link redirecting to it. Still in beta version, this plugin has been <strong>full tested only on WordPress 3.6-beta3</strong>.
 Version: 0.0.1
 Author: Alessandro Benoit
 Author URI: http://codeb.it
@@ -25,7 +25,7 @@ $my_plugin = new My_Plugin(
 );
 
 // Instantiate Heartbeat notifications
-new Wp_Hearbeat_Notify( array(
+new Wp_Heartbeat_Notify( array(
 	'context'	=>	array( 'front' ),	// This plugin is supposed to work only on the front end
 	'base_url'	=>	$my_plugin->uri		// Set js and css base url
 ) );
