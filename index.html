@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Wp-heartbeat-notify by micc83</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Wp-heartbeat-notify</h1>
+        <p>Based on WordPress 3.6 heartbeat API, Wp Hearbeat Notify, display a realtime custom message to your visitor each time a new post is published with a link redirecting to it. Still in beta version, this plugin has been full tested only on WordPress 3.6-beta3.</p>
+
+        <p class="view"><a href="https://github.com/micc83/wp-heartbeat-notify">View the Project on GitHub <small>micc83/wp-heartbeat-notify</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/micc83/wp-heartbeat-notify/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/micc83/wp-heartbeat-notify/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/micc83/wp-heartbeat-notify">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>Based on <strong>WordPress 3.6 heartbeat API</strong>, Wp Hearbeat Notify, display a realtime custom message to your visitor each time a new post is published with a link redirecting to it. Still in beta version, this plugin has been <strong>full tested only on WordPress 3.6-beta3</strong>.</p>
+
+<p><img src="https://github.com/micc83/wp-heartbeat-notify/raw/master/wp-heartbeat-notify/screenshot-1.jpg" alt="wp-heartbeat-notify screenshot"></p>
+
+<h2>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h2>
+
+<p>Just upload <code>wp-heartbeat-notify</code> to your WordPress <code>wp-content/plugin/</code> folder. Go to <em>Plugins-&gt;Installed plugins</em> WordPress menu and activate it. That's it... You just have to write a new article to see it in action (Clearly, the notification will not be displayed to the user who created the event. So, for the purposes of testing, I suggest you open another browser where you're logged in).</p>
+
+<h2>
+<a name="purpose" class="anchor" href="#purpose"><span class="octicon octicon-link"></span></a>Purpose</h2>
+
+<p>This is probably the first, or at least one of the first WordPress plugin that makes use of the Hearbeat API. Its purpose is almost purely didactic and I hope that the solution that I have implemented it can be useful for developing new ideas.</p>
+
+<p>The plugin, however, is fully functional and can increase the functionality with a few lines of code, as described below.</p>
+
+<h2>
+<a name="under-the-hood" class="anchor" href="#under-the-hood"><span class="octicon octicon-link"></span></a>Under the hood</h2>
+
+<p>The functioning of the plugin is quite simple.</p>
+
+<ul>
+<li>All scripts and styles necessary for the functioning of hearbeat are queued</li>
+<li>To generate a notification you hook onto an action or a filter of WordPress and you create a transient that match the length of the heartbeat rate</li>
+<li>wp-heartbeat-notify, every few seconds, check the presence of transient and output the content as a notification</li>
+</ul><p>Easy... Isn't it?</p>
+
+<h2>
+<a name="add-new-notice" class="anchor" href="#add-new-notice"><span class="octicon octicon-link"></span></a>Add new notice</h2>
+
+<p>To add a new notice, as stated before, you just have to hook into an action or filter and run <code>Wp_Hearbeat_Notify::notify( $args )</code> as in the following example:</p>
+
+<h3>
+<a name="add-a-notice-on-registered-users-comments" class="anchor" href="#add-a-notice-on-registered-users-comments"><span class="octicon octicon-link"></span></a>Add a notice on registered users comments</h3>
+
+<div class="highlight"><pre>
+<span class="c1">// Let's hook into Comment publication</span>
+<span class="nx">add_filter</span> <span class="p">(</span> <span class="s1">'comment_post'</span><span class="p">,</span> <span class="s1">'notify_new_comment'</span> <span class="p">);</span>
+<span class="k">function</span> <span class="nf">notify_new_comment</span><span class="p">(</span> <span class="nv">$comment_id</span> <span class="p">)</span> <span class="p">{</span>
+
+  <span class="c1">// Retrieve the comment</span>
+  <span class="nv">$comment</span> <span class="o">=</span> <span class="nx">get_comment</span><span class="p">(</span> <span class="nv">$comment_id</span> <span class="p">);</span>
+
+  <span class="c1">// Check if the user is registered</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nv">$comment</span><span class="o">-&gt;</span><span class="na">user_id</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+
+  <span class="c1">// Get the comment link</span>
+  <span class="nv">$comment_link</span> <span class="o">=</span> <span class="nx">get_comment_link</span><span class="p">(</span> <span class="nv">$comment_id</span> <span class="p">);</span> 
+
+  <span class="c1">// Here's the magic</span>
+    <span class="nx">Wp_Hearbeat_Notify</span><span class="o">::</span><span class="na">notify</span><span class="p">(</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">'title'</span>     <span class="o">=&gt;</span>      <span class="s1">'New Comment by '</span> <span class="o">.</span> <span class="nv">$comment</span><span class="o">-&gt;</span><span class="na">comment_author</span><span class="p">,</span>
+        <span class="s1">'content'</span>   <span class="o">=&gt;</span>      <span class="s1">'There\'s a new comment, why don\'t you &lt;a href="'</span> <span class="o">.</span> <span class="nv">$comment_link</span> <span class="o">.</span> <span class="s1">'"&gt;give it&lt;/a&gt; a look?'</span><span class="p">,</span>
+        <span class="s1">'type'</span>      <span class="o">=&gt;</span>      <span class="s1">'info'</span>
+    <span class="p">)</span> <span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="support-and-contacts" class="anchor" href="#support-and-contacts"><span class="octicon octicon-link"></span></a>Support and contacts</h2>
+
+<p>If you need support you can find me on <a href="https://twitter.com/Micc1983">twitter</a> or comment on the dedicated page on my <a href="http://codeb.it/">website</a>.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/micc83">micc83</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-34218175-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
