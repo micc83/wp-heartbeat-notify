@@ -1,0 +1,10 @@
+.admin-bar #popup_container { margin-top: 28px; }
+#popup_container { position:fixed;bottom:0;right:0;overflow:hidden;width:25%;paddind:10px;z-index: 10000; }
+#popup_container .popup_notification { padding:10px 20px;margin:10px;position:relative;font-size:12px;border-radius:3px;-moz-border-radius:3px; -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.3); -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.3); box-shadow: 0 1px 2px rgba(0,0,0,0.3);line-height: 20px;font-family: Tahoma,Geneva,Arial,sans-serif;text-shadow: 0 1px 1px rgba(255,255,255,0.9);}
+#popup_container .popup_notification a {color: #21759b;}
+#popup_container .popup_notification .title {display:block;font-weight: 800;font-size: 13px;line-height: 22px;}
+#popup_container .popup_notification.update {background-color: rgb(223, 242, 191);color: rgb(70, 136, 71);border:1px solid rgb(70, 136, 71);}
+#popup_container .popup_notification.info {background-color: rgb(189, 229, 248);color: rgb(0, 82, 155);border:1px solid rgb(0, 82, 155);}
+#popup_container .popup_notification.warning {background-color: rgb(254, 239, 179);color: rgb(159, 96, 0);border:1px solid rgb(159, 96, 0);}
+#popup_container .popup_notification.error {background-color: rgb(255, 186, 186);color: rgb(216, 0, 12);border:1px solid rgb(216, 0, 12);}
+#popup_container .popup_notification .close {position:absolute;top:-5px;right:0;padding: 6px 7px;cursor:pointer;font-size:12px;font-weight:bold;}
