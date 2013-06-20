@@ -37,7 +37,7 @@ function notify_published_post( $post_id ) {
 	global $my_plugin;
 	
 	// That's it. Easy... isn'it?
-	Wp_Hearbeat_Notify::notify( array(
+	Wp_Heartbeat_Notify::notify( array(
 		'title'		=>		__( 'New Article', $my_plugin->textdomain ),
 		'content'	=>	 	__( 'There\'s a new post, why don\'t you give a look at', $my_plugin->textdomain ) . 
 							' <a href="' . get_permalink( $post_id ) . '">' . get_the_title( $post_id ) . '</a>',
