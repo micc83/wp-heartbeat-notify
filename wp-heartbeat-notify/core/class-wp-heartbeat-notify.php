@@ -2,11 +2,11 @@
 /**
  * WordPress Heartbeat Notifications Class
  */
-class Wp_Hearbeat_Notify {
+class Wp_Heartbeat_Notify {
 	
 	var $args = array(
 	
-		// Enable Wp_Hearbeat_Notify on admin or theme
+		// Enable Wp_Heartbeat_Notify on admin or theme
 		'context'			=>	array( 'admin', 'front' ),
 		
 		// User needed capability
@@ -15,7 +15,7 @@ class Wp_Hearbeat_Notify {
 		// Include jQuery or use theme one	
 		'native_jquery'		=>	true,	
 		
-		// Hearbeat rate - Only for testing purposes (default: 15)
+		// Heartbeat rate - Only for testing purposes (default: 15)
 		'interval'			=>	'auto',
 		
 		// Domain - So you'll be able to handle multiple instance
