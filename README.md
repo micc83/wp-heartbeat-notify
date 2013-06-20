@@ -4,6 +4,8 @@
 
 Based on **WordPress 3.6 heartbeat API**, Wp Hearbeat Notify, display a realtime custom message to your visitor each time a new post is published with a link redirecting to it. Still in beta version, this plugin has been **full tested only on WordPress 3.6-beta3**.
 
+![wp-heartbeat-notify screenshot](https://github.com/micc83/wp-heartbeat-notify/raw/master/wp-heartbeat-notify/screenshot-1.jpg)
+
 ## Install
 
 Just upload `wp-heartbeat-notify` to your WordPress `wp-content/plugin/` folder. Go to *Plugins->Installed plugins* WordPress menu and activate it. That's it... You just have to write a new article to see it in action (Clearly, the notification will not be displayed to the user who created the event. So, for the purposes of testing, I suggest you open another browser where you're logged in).
