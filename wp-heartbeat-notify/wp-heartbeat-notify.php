@@ -25,10 +25,14 @@ $my_plugin = new My_Plugin(
 );
 
 // Instantiate Heartbeat notifications
-new Wp_Heartbeat_Notify( array(
-	'context'	=>	array( 'front' ),	// This plugin is supposed to work only on the front end
-	'base_url'	=>	$my_plugin->uri		// Set js and css base url
-) );
+add_action( 'init', 'initialize_wp_heartbeat_notify' );
+function initialize_wp_heartbeat_notify () {
+	new Wp_Heartbeat_Notify( array(
+		'context'	=>	array( 'front' ),	// This plugin is supposed to work only on the front end
+		'base_url'	=>	$my_plugin->uri		// Set js and css base url
+	));
+}
+
 
 // Let's hook into Post publication
 add_filter ( 'publish_post', 'notify_published_post' );
