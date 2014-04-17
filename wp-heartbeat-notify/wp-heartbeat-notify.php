@@ -27,10 +27,14 @@ $my_plugin = new My_Plugin(
 // Instantiate Heartbeat notifications
 add_action( 'init', 'initialize_wp_heartbeat_notify' );
 function initialize_wp_heartbeat_notify () {
+
+	global $my_plugin;
+
 	new Wp_Heartbeat_Notify( array(
 		'context'	=>	array( 'front' ),	// This plugin is supposed to work only on the front end
 		'base_url'	=>	$my_plugin->uri		// Set js and css base url
 	));
+	
 }
 
 
